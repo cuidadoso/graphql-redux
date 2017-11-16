@@ -3,6 +3,15 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from "redux-thunk";
+
+import { queryReducer } from './app/reducers';
+
+const createStoreWithMiddleware = applyMiddleware(
+    thunkMiddleware
+)(createStore);
 
 class Main extends Component {
     render() {
@@ -15,6 +24,8 @@ class Main extends Component {
 }
 
 ReactDOM.render(
-    <Main/>,
+    <Provider store={createStoreWithMiddleware(queryReducer)}>
+        <Main />
+    </Provider>,
     document.getElementById("example")
 );
